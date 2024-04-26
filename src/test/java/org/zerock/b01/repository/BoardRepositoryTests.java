@@ -126,5 +126,10 @@ public class BoardRepositoryTests {
         Pageable pageable = PageRequest.of(1,10,Sort.by("bno").descending());
 
         Page<Board> result = boardRepository.searchAll(types,keyword,pageable);
+        result.getContent().forEach(board -> log.info(board));
+        log.info("사이즈 : "+ result.getSize());
+        log.info("페이지번호 : "+ result.getNumber());
+        log.info("이전페이지 : "+ result.hasPrevious());
+        log.info("다음페이지 : "+ result.hasNext());
     }
 }
