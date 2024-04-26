@@ -1,4 +1,4 @@
-package com.zerock.b01;
+package org.zerock.b01;
 
 import lombok.Cleanup;
 import lombok.extern.log4j.Log4j2;
