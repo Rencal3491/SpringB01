@@ -5,10 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.zerock.b01.domain.Board;
+import org.zerock.b01.repository.search.BoardSearch;
 
 //                                  <Board, Long> - 엔티티 타입 ,  id
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
     Page<Board> findByTitleContainingOrderByBnoDesc(String keyword, Pageable pageable);
 
     //@Query 어노테이션에서 사용하는 구문은 JPQL을 사용

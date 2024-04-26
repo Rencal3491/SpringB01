@@ -101,4 +101,22 @@ public class BoardRepositoryTests {
         );
         result.getContent().forEach(board -> log.info(board));
     }
+    @Test
+    public void testQueryAnnotation() {
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+
+        Page<Board> result = boardRepository.findKeyword("title",pageable);
+        result.getContent().forEach(board -> log.info(board));
+    }
+    @Test
+    public void testGetTime() {
+        log.info(boardRepository.getTime());
+    }
+    @Test
+    public void testSearch1() {
+        //2page order by bno desc
+        Pageable pageable = PageRequest.of
+                (1,10,Sort.by("bno").descending());
+        boardRepository.search1(pageable);
+    }
 }
