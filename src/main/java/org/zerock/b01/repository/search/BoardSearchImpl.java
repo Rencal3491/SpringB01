@@ -42,4 +42,37 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         long count = query.fetchCount();   //쿼리실행
         return null;
     }
+
+    @Override
+    public Page<Board> searchAll(String[] types, String keyword, Pageable pageable) {
+        //1 Qdomain 객체 생성
+        QBoard board = QBoard.board;
+        //2 ql 작성
+        JPQLQuery<Board> query = from(board); //select ~ from board
+        if ((types != null && types.length >0) && keyword!= null) {
+            //검색 조건과 키워드가 있는 경우
+            BooleanBuilder booleanBuilder = new BooleanBuilder(); // (
+            for (String type: types) {
+                switch (type) {
+                    case "t" :
+                        booleanBuilder.or(board.title.contains(keyword)); //title like concat('%', keyword, '%')
+                        break;
+                    case "c" :
+                        booleanBuilder.or(board.content.contains(keyword)); //content like concat('%', keyword, '%')
+                        break;
+                    case "w" :
+                        booleanBuilder.or(board.writer.contains(keyword)); //writer like concat('%', keyword, '%')
+                        break;
+                }
+            } //for end
+            query.where(booleanBuilder);                         // )
+        } //if end
+        //bno>0
+        query.where(board.bno.gt(0L));
+        //paging
+        this.getQuerydsl().applyPagination(pageable,query);
+        List<Board> list = query.fetch();
+        long count = query.fetchCount();
+        return null;
+    }
 }

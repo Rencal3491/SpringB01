@@ -13,4 +13,6 @@ import org.zerock.b01.domain.Board;
 public interface BoardSearch {
     Page<Board> search1(Pageable pageable);
 
+    //title과 content 내용 검색
+    Page<Board> searchAll(String[] types,String keyword, Pageable pageable);
 }
